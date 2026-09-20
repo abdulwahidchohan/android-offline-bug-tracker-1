@@ -126,13 +126,29 @@ class IssueDaoInstrumentationTest {
 
     @Test
     fun purgeTombstone_removesLogicallyDeletedIssue() = runBlocking {
-        val issue = IssueEntity(id = "tomb-1", title = "Tombstone", isDeleted = true)
-        dao.insertIssue(issue)
-
+        // A synced tombstone confirmed by server should be purged
+        val syncedTombstone = IssueEntity(
+            id = "tomb-1",
+            title = "Tombstone",
+            isDeleted = true,
+            syncState = SyncState.SYNCED
+        )
+        dao.insertIssue(syncedTombstone)
         dao.purgeTombstone("tomb-1")
-
         val retrieved = dao.getIssueById("tomb-1")
         assertNull(retrieved)
+
+        // An unconfirmed pending deletion tombstone MUST be preserved
+        val pendingTombstone = IssueEntity(
+            id = "tomb-2",
+            title = "Pending Tombstone",
+            isDeleted = true,
+            syncState = SyncState.PENDING
+        )
+        dao.insertIssue(pendingTombstone)
+        dao.purgeTombstone("tomb-2")
+        val preserved = dao.getIssueById("tomb-2")
+        assertNotNull(preserved)
     }
 
     @Test
