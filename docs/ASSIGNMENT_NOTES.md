@@ -142,6 +142,8 @@ The project adheres to professional version control practices and is hosted on G
 
 ### 12. Honest Limitations of the Completed Project
 
+> **Academic Statement:** Room-based offline CRUD, lifecycle-state restoration, synchronization scheduling, and synchronization decision logic were implemented and verified through compilation and automated tests. Retrofit defines bidirectional CRUD endpoints, while remote behaviors were tested with a fake API. Because no live backend was deployed, production HTTP synchronization was not claimed as live-tested.
+
 To preserve academic integrity, the following real-world boundaries are explicitly acknowledged:
 1. **Placeholder Remote URL:** In the absence of a hosted cloud REST backend, `RetrofitClient` points to `https://api.bugtracker.uopeople.internal/v1/`. For live testing, a local mock server (e.g., Node.js/Express, WireMock, or MockWebServer) can be substituted.
 2. **Simplified Conflict Resolution:** The newest-update-wins strategy relies on device system clocks. In a multi-user enterprise setting, distributed clocks can drift; a production architecture would utilize server-assigned sequence numbers, vector clocks, or ETags to detect three-way merge conflicts.
