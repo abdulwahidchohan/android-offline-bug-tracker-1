@@ -7,48 +7,118 @@
 
 ---
 
-This document defines the required visual and execution evidence for the academic assessment of the Offline-First Bug Tracker application. Each section provides the exact verification criteria that each screenshot or command output must substantiate.
+This document provides the definitive verification matrix for the academic assessment of the Offline-First Bug Tracker application. Each section details the verification criteria, current status, verified terminal proof, and actionable step-by-step procedures to record device screenshots.
 
 ---
 
-### Evidence Checklist
+### Evidence Verification Matrix
 
-| # | Evidence Item | Verification Objective & What Screenshot Must Prove | Status |
+| # | Evidence Item | Verification Objective | Current Status |
 |---|---|---|---|
-| **1** | **Application Issue List** | Shows active issues displayed inside RecyclerView with title, priority badge, status badge, formatted timestamp, and textual sync indicator. Must demonstrate that status is not communicated through color alone. | `[PLACEHOLDER: docs/screenshots/01_issue_list.png]` |
-| **2** | **Create Issue Screen** | Shows the issue editor with empty form fields, outlining input fields for Title and Description, and radio selections for Priority (Low/Medium/High/Critical) and Status (Open/In Progress/Resolved/Closed). | `[PLACEHOLDER: docs/screenshots/02_create_issue.png]` |
-| **3** | **Update Issue Screen** | Shows existing issue data populated into the editor fields upon tapping an issue card or "Edit" button, ready for modification. | `[PLACEHOLDER: docs/screenshots/03_update_issue.png]` |
-| **4** | **Offline Pending Issue** | Shows an issue created while airplane mode/disconnection is active. The badge must explicitly display **"Pending Sync"** in text, proving local persistence without network dependency. | `[PLACEHOLDER: docs/screenshots/04_offline_pending.png]` |
-| **5** | **Issue Retained After App Restart** | Shows the issue list immediately upon cold launching the application after force-stopping it, proving persistent storage in SQLite via Room. | `[PLACEHOLDER: docs/screenshots/05_app_restart.png]` |
-| **6** | **Draft Restored After Rotation** | Demonstrates landscape orientation change with partially filled title and description inputs intact, proving state preservation via `SavedStateHandle`. | `[PLACEHOLDER: docs/screenshots/06_rotation_draft.png]` |
-| **7** | **Successful Synchronization** | Shows the issue sync badge changing to **"Synchronized"** after network connectivity is restored and `IssueSyncWorker` executes. | `[PLACEHOLDER: docs/screenshots/07_synced_badge.png]` |
-| **8** | **Failed Sync and Bounded Retry** | Shows an issue with a **"Sync Failed"** badge or Logcat output showing `IssueSyncWorker` encountering a network error and scheduling exponential backoff retry. | `[PLACEHOLDER: docs/screenshots/08_sync_retry.png]` |
-| **9** | **Room Database Inspector Evidence** | Shows the Android Studio App Inspection / Database Inspector view displaying the `issues` table rows, columns (`id`, `title`, `syncState`, `isDeleted`, `operationType`, `updatedAt`). | `[PLACEHOLDER: docs/screenshots/09_room_inspector.png]` |
-| **10** | **Feature Branch (`feature/offline-issue-sync`)** | Terminal output of `git branch -a` or GitHub repository branch list showing the active feature branch where offline sync was developed. | `[PLACEHOLDER: docs/screenshots/10_git_feature_branch.png]` |
-| **11** | **Hotfix Branch (`hotfix/preserve-delete-tombstones`)** | Terminal output of `git branch -a` or GitHub repository showing the hotfix branch dedicated to preserving tombstone records until server acknowledgement. | `[PLACEHOLDER: docs/screenshots/11_git_hotfix_branch.png]` |
-| **12** | **Commit Graph (`git log --graph --oneline`)** | Terminal output of git commit log showing structured commits (`feat:`, `fix:`, `chore:`, `test:`) and branch merges. | `[PLACEHOLDER: docs/screenshots/12_git_commit_graph.png]` |
-| **13** | **Merged Pull Request** | GitHub or Git CLI representation of feature branch merged into `main` branch. | `[PLACEHOLDER: docs/screenshots/13_merged_pr.png]` |
-| **14** | **Release Tag (`v1.0`)** | Terminal output of `git tag -n -l` showing annotated release tag `v1.0: stable offline CRUD and synchronization`. | `[PLACEHOLDER: docs/screenshots/14_git_tag_v1.0.png]` |
+| **1** | **Application Issue List** | Active issues rendered in RecyclerView with title, priority badge, status badge, formatted timestamp, and textual sync indicator. | `[PENDING DEVICE CAPTURE: docs/screenshots/01_issue_list.png]` |
+| **2** | **Create Issue Screen** | Clean editor form with empty inputs for Title and Description, and radio selectors for Priority (Low/Medium/High/Critical) and Status (Open/In Progress/Resolved/Closed). | `[PENDING DEVICE CAPTURE: docs/screenshots/02_create_issue.png]` |
+| **3** | **Update Issue Screen** | Populated form fields when editing an existing ticket, allowing mutation of title, description, priority, or status. | `[PENDING DEVICE CAPTURE: docs/screenshots/03_update_issue.png]` |
+| **4** | **Offline Pending Issue** | Issue created while offline displaying explicit textual badge **"Pending Sync"** (never color alone, per WCAG accessibility requirements). | `[PENDING DEVICE CAPTURE: docs/screenshots/04_offline_pending.png]` |
+| **5** | **Issue Retained After App Restart** | Cold launch of the application after force-stop, proving persistence in local SQLite database via Room. | `[PENDING DEVICE CAPTURE: docs/screenshots/05_app_restart.png]` |
+| **6** | **Draft Restored After Rotation** | Screen rotation from portrait to landscape retaining partially typed title and description via `SavedStateHandle`. | `[PENDING DEVICE CAPTURE: docs/screenshots/06_rotation_draft.png]` |
+| **7** | **Successful Synchronization** | Issue badge updating from "Pending Sync" to **"Synchronized"** upon background worker execution. | `[PENDING DEVICE CAPTURE: docs/screenshots/07_synced_badge.png]` |
+| **8** | **Failed Sync and Bounded Retry** | Issue badge displaying **"Sync Failed"** or Logcat entries showing exponential backoff retry scheduling under network error. | `[PENDING DEVICE CAPTURE: docs/screenshots/08_sync_retry.png]` |
+| **9** | **Room Database Inspector Evidence** | Android Studio Database Inspector view showing the `issues` table rows and columns. | `[PENDING INSPECTION CAPTURE: docs/screenshots/09_room_inspector.png]` |
+| **10** | **Feature Branch (`feature/offline-issue-sync`)** | Terminal proof of active feature branch for offline sync development. | **VERIFIED (See Terminal Evidence Below)** |
+| **11** | **Hotfix Branch (`hotfix/preserve-delete-tombstones`)** | Terminal proof of isolated hotfix branch with real code modifications safeguarding tombstones. | **VERIFIED (See Terminal Evidence Below)** |
+| **12** | **Commit Graph (`git log --graph --oneline`)** | Visual graph of conventional commits, feature merge, hotfix merge, and release tag. | **VERIFIED (See Terminal Evidence Below)** |
+| **13** | **Merged Pull Request** | GitHub Pull Request merging feature and hotfix branches into `main`. | `[AWAITING REMOTE PUSH: See Section C]` |
+| **14** | **Release Tag (`v1.0`)** | Terminal proof of annotated release tag marking stable offline CRUD. | **VERIFIED (See Terminal Evidence Below)** |
 
 ---
 
-### Step-by-Step Instructions to Capture Real Evidence
+### Verified Terminal Evidence
 
-1. **Capturing Device Screenshots (Items 1–8):**
+#### A. Git Branch Listing (`git branch -a`)
+```
+  feature/offline-issue-sync
+  hotfix/preserve-delete-tombstones
+* main
+```
+
+#### B. Git Annotated Release Tag (`git tag -n -l`)
+```
+v1.0            v1.0: stable offline CRUD and synchronization
+```
+
+#### C. Git Commit Graph (`git log --graph --oneline --decorate --all -n 15`)
+```
+*   4876c0f (HEAD -> main, tag: v1.0) merge: hotfix/preserve-delete-tombstones into main
+|\  
+| * 211921c (hotfix/preserve-delete-tombstones) fix: preserve deleted issues until server confirmation
+|/  
+*   3966b90 merge: feature/offline-issue-sync into main
+|\  
+| * 84aeb03 (feature/offline-issue-sync) docs: add setup, architecture documentation, and academic rubric mapping
+| * 37be25b test: add DAO, repository, ViewModel, and mapper tests
+| * 098bec6 feat: preserve editor state across lifecycle recreation and add Material 3 UI
+| * 08d1d74 feat: add WorkManager synchronization and retry logic
+| * b2a2910 feat: implement offline-first issue repository with conflict protection
+| * 88c137d feat: add Retrofit issue endpoints, DTOs, and mapper
+| * ee1ca37 feat: add Room issue schema, enums, converters, and CRUD operations
+| * c989018 chore: initialize Android bug tracker with Gradle 8.7 and build configuration
+|/  
+* ef60907 Initial commit
+```
+
+#### D. Automated Test Suite Execution (`.\gradlew.bat testDebugUnitTest`)
+```
+> Task :app:compileDebugKotlin
+> Task :app:kspDebugKotlin
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:testDebugUnitTest
+
+BUILD SUCCESSFUL in 1m 27s
+28 actionable tasks: 16 executed, 12 up-to-date
+```
+**Outcome:** **17 tests completed, 17 passed, 0 failed.**
+
+---
+
+### Step-by-Step Instructions to Capture Device & GitHub Evidence
+
+#### 1. Connecting Physical Phone & Installing APK
+1. On your Android phone, navigate to **Settings -> About Phone** and tap **Build Number** 7 times to unlock Developer Options.
+2. In **Settings -> System -> Developer Options**, enable **USB Debugging**.
+3. Connect your phone to your PC via USB cable. In PowerShell, verify the connection:
    ```powershell
-   # Use the Android CLI or adb to capture high-resolution device screens
-   android screenshot --output=docs/screenshots/01_issue_list.png
+   adb devices
+   ```
+4. Install the generated debug APK directly to your phone:
+   ```powershell
+   adb install -r app\build\outputs\apk\debug\app-debug.apk
+   ```
+5. Capture device screenshots directly from the command line:
+   ```powershell
+   # Create screenshots directory
+   New-Item -ItemType Directory -Force -Path docs\screenshots
+
+   # Take screenshot of open app screen:
+   adb exec-out screencap -p > docs\screenshots\01_issue_list.png
    ```
 
-2. **Capturing Room Database Inspector (Item 9):**
-   - Open Android Studio -> App Inspection -> Database Inspector.
-   - Select `bug_tracker.db` and double-click `issues`.
-   - Take a window capture showing the table rows and columns.
+#### 2. Running Connected Instrumentation Tests on Device
+With your phone connected and unlocked:
+```powershell
+.\gradlew.bat connectedDebugAndroidTest
+```
+The test runner will execute `IssueDaoInstrumentationTest` on the physical SQLite engine and save an HTML test report to `app\build\reports\androidTests\connected\`.
 
-3. **Capturing Git Version Control Evidence (Items 10–14):**
-   ```powershell
-   # Terminal commands to display git evidence:
-   git branch -vv
-   git log --graph --oneline --decorate -n 15
-   git tag -n -l
-   ```
+#### 3. Connecting GitHub Remote & Pushing
+Once you create an empty repository on GitHub named `android-offline-bug-tracker`:
+```powershell
+# 1. Add your remote repository URL
+git remote add origin https://github.com/<your-username>/android-offline-bug-tracker.git
+
+# 2. Push main branch and annotated release tag
+git push -u origin main --tags
+
+# 3. Push feature and hotfix branches for complete PR visibility
+git push -u origin feature/offline-issue-sync
+git push -u origin hotfix/preserve-delete-tombstones
+```
