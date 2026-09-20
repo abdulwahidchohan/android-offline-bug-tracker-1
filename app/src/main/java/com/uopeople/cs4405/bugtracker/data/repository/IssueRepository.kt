@@ -204,7 +204,8 @@ class IssueRepository(
                     try {
                         val response = issueApi.deleteIssue(issue.id)
                         if (response.isSuccessful || response.code() == 404) {
-                            // Server confirmed deletion (or record already gone); purge local tombstone
+                            // Server confirmed deletion; mark SYNCED before purging through guarded DAO query
+                            issueDao.updateSyncState(issue.id, SyncState.SYNCED, PendingOperation.NONE)
                             issueDao.purgeTombstone(issue.id)
                             syncedCount++
                         } else if (response.code() in 500..599) {

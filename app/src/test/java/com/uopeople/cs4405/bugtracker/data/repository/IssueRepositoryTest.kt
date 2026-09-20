@@ -195,4 +195,26 @@ class IssueRepositoryTest {
         assertEquals("Local Newer Title", preservedLocal?.title)
         assertEquals(SyncState.PENDING, preservedLocal?.syncState)
     }
+
+    @Test
+    fun deleteIssue_tombstoneNeverPurgedWhileSyncStateIsPending() = runTest {
+        // Create an issue and mark it logically deleted while offline
+        val localIssue = IssueEntity(
+            id = "issue-tomb-guard",
+            title = "Guarded Tombstone",
+            syncState = SyncState.PENDING,
+            isDeleted = true,
+            operationType = PendingOperation.DELETE
+        )
+        fakeDao.insertIssue(localIssue)
+
+        // Attempting to purge a tombstone that is still PENDING must be blocked by DAO guard
+        fakeDao.purgeTombstone("issue-tomb-guard")
+
+        // Tombstone must still be present in database!
+        val tombstone = fakeDao.getIssueById("issue-tomb-guard")
+        assertNotNull(tombstone)
+        assertTrue(tombstone?.isDeleted == true)
+        assertEquals(SyncState.PENDING, tombstone?.syncState)
+    }
 }
