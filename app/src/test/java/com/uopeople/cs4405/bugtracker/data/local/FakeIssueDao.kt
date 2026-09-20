@@ -78,7 +78,7 @@ class FakeIssueDao : IssueDao {
 
     override suspend fun purgeTombstone(id: String) {
         val existing = issuesMap[id]
-        if (existing != null && existing.isDeleted) {
+        if (existing != null && existing.isDeleted && existing.syncState == SyncState.SYNCED) {
             issuesMap.remove(id)
             emit()
         }

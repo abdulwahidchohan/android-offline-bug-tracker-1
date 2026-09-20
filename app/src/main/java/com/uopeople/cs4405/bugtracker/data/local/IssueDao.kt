@@ -64,9 +64,10 @@ interface IssueDao {
     suspend fun updateSyncState(id: String, syncState: SyncState, operationType: PendingOperation)
 
     /**
-     * Permanently purges a tombstone record after successful server deletion confirmation.
+     * Permanently purges a tombstone record only after successful server deletion confirmation.
+     * Architectural guard: ensures pending deletion intents are never prematurely purged.
      */
-    @Query("DELETE FROM issues WHERE id = :id AND isDeleted = 1")
+    @Query("DELETE FROM issues WHERE id = :id AND isDeleted = 1 AND syncState = 'SYNCED'")
     suspend fun purgeTombstone(id: String)
 
     /**
