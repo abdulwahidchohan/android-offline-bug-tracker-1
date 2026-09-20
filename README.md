@@ -308,9 +308,10 @@ For the visual screenshot checklist and mapping to grading requirements, see:
   - Offline-first repository with tombstone management and conflict protection.
   - WorkManager `IssueSyncWorker` with network constraints, exponential backoff, and bounded retries.
   - Material 3 XML UI with RecyclerView DiffUtil, ViewBinding, and SavedStateHandle draft restoration.
-  - Unit tests covering repository invariants, ViewModels, and mappers.
-- **Academic Demonstration Limitations:**
-  - Remote backend uses a documented placeholder URL; live demonstration relies on `FakeIssueApi` unless configured with a live server URL.
+  - 17 unit tests covering repository invariants, ViewModels, and mappers.
+- **Academic Demonstration & Backend Statement:**
+  > Room-based offline CRUD, lifecycle-state restoration, synchronization scheduling, and synchronization decision logic were implemented and verified through compilation and automated tests. Retrofit defines bidirectional CRUD endpoints, while remote behaviors were tested with a fake API. Because no live backend was deployed, production HTTP synchronization was not claimed as live-tested.
+  - Remote backend uses a documented placeholder URL (`https://api.bugtracker.uopeople.internal/v1/`); live demonstration relies on `FakeIssueApi` unless configured with a live server URL.
   - Conflict resolution uses timestamp comparison; multi-device production systems would require server-assigned monotonic version counters or vector clocks.
 
 ---
