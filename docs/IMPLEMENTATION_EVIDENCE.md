@@ -35,9 +35,15 @@ This document provides the definitive verification matrix for the academic asses
 
 #### A. Git Branch Listing (`git branch -a`)
 ```
+  docs/final-evidence
   feature/offline-issue-sync
   hotfix/preserve-delete-tombstones
 * main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/docs/final-evidence
+  remotes/origin/feature/offline-issue-sync
+  remotes/origin/hotfix/preserve-delete-tombstones
+  remotes/origin/main
 ```
 
 #### B. Git Annotated Release Tag (`git tag -n -l`)
@@ -47,13 +53,16 @@ v1.0            v1.0: stable offline CRUD and synchronization
 
 #### C. Git Commit Graph (`git log --graph --oneline --decorate --all -n 15`)
 ```
-*   4876c0f (HEAD -> main, tag: v1.0) merge: hotfix/preserve-delete-tombstones into main
+* a5c5eb5 (origin/docs/final-evidence, docs/final-evidence) docs: sync verified physical device evidence into docs/final-evidence
+* fdaa3d4 (HEAD -> main, origin/main) docs: add physical device screenshots, instrumentation test proof, and updated evidence matrix
+* daa508d docs: update implementation evidence checklist with verified terminal execution logs
+*   4876c0f (tag: v1.0) merge: hotfix/preserve-delete-tombstones into main
 |\  
-| * 211921c (hotfix/preserve-delete-tombstones) fix: preserve deleted issues until server confirmation
+| * 211921c (origin/hotfix/preserve-delete-tombstones, hotfix/preserve-delete-tombstones) fix: preserve deleted issues until server confirmation
 |/  
 *   3966b90 merge: feature/offline-issue-sync into main
 |\  
-| * 84aeb03 (feature/offline-issue-sync) docs: add setup, architecture documentation, and academic rubric mapping
+| * 84aeb03 (origin/feature/offline-issue-sync, feature/offline-issue-sync) docs: add setup, architecture documentation, and academic rubric mapping
 | * 37be25b test: add DAO, repository, ViewModel, and mapper tests
 | * 098bec6 feat: preserve editor state across lifecycle recreation and add Material 3 UI
 | * 08d1d74 feat: add WorkManager synchronization and retry logic
