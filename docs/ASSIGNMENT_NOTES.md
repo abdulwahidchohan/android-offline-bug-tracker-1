@@ -129,11 +129,12 @@ The repository categorizes errors using `SyncResult` to ensure precise handling:
 
 ### 11. Version Control & Git Strategy
 
-The project adheres to professional version control practices:
+The project adheres to professional version control practices and is hosted on GitHub at **[abdulwahidchohan/android-offline-bug-tracker-1](https://github.com/abdulwahidchohan/android-offline-bug-tracker-1)**:
 - **Branch Hierarchy:**
   - `main`: Stable production-ready releases.
   - `feature/offline-issue-sync`: Dedicated branch for Room schemas, Retrofit endpoints, repository sync, and WorkManager implementation.
   - `hotfix/preserve-delete-tombstones`: Isolated branch addressing edge cases where deleted records must be retained as tombstones until remote confirmation.
+  - `docs/final-evidence`: Dedicated branch for GitHub Pull Request review and academic evidence tracking.
 - **Conventional Commits:** All commit messages use standardized semantic prefixes (`feat:`, `fix:`, `test:`, `docs:`, `chore:`) to establish a clean, traceable development history.
 - **Annotated Release Tags:** Releases are marked using annotated semantic tags (e.g., `git tag -a v1.0 -m "v1.0: stable offline CRUD and synchronization"`).
 
@@ -147,3 +148,13 @@ To preserve academic integrity, the following real-world boundaries are explicit
 1. **Placeholder Remote URL:** In the absence of a hosted cloud REST backend, `RetrofitClient` points to `https://api.bugtracker.uopeople.internal/v1/`. For live testing, a local mock server (e.g., Node.js/Express, WireMock, or MockWebServer) can be substituted.
 2. **Simplified Conflict Resolution:** The newest-update-wins strategy relies on device system clocks. In a multi-user enterprise setting, distributed clocks can drift; a production architecture would utilize server-assigned sequence numbers, vector clocks, or ETags to detect three-way merge conflicts.
 3. **No Biometric / OAuth2 Authentication:** The current academic release focuses on core offline-first synchronization and does not include user authentication or role-based access control.
+
+---
+
+### 13. Physical Device Verification Evidence (Samsung Galaxy A07)
+
+The application was deployed, executed, and tested on a physical **Samsung Galaxy A07 (SM-A075F)** running Android 16 (API 36):
+- **On-Device SQLite Verification:** Connected instrumentation test suite (`IssueDaoInstrumentationTest`) ran 6 tests directly against the physical phone's SQLite engine; **6 passed, 0 failed**.
+- **Cold Process Restart:** The application was force-stopped and relaunched, confirming Room SQLite database persistence across cold reboots.
+- **Draft Retention:** Screen rotation between portrait and landscape confirmed `SavedStateHandle` draft restoration.
+- **Live Device Screenshots:** 7 authentic device screenshots were captured via ADB and stored under `docs/screenshots/` (`01_issue_list.png` through `07_sync_retry.png`).

@@ -53,7 +53,10 @@ v1.0            v1.0: stable offline CRUD and synchronization
 
 #### C. Git Commit Graph (`git log --graph --oneline --decorate --all -n 15`)
 ```
-*   4876c0f (HEAD -> main, tag: v1.0, origin/main) merge: hotfix/preserve-delete-tombstones into main
+* a5c5eb5 (origin/docs/final-evidence, docs/final-evidence) docs: sync verified physical device evidence into docs/final-evidence
+* fdaa3d4 (HEAD -> main, origin/main) docs: add physical device screenshots, instrumentation test proof, and updated evidence matrix
+* daa508d docs: update implementation evidence checklist with verified terminal execution logs
+*   4876c0f (tag: v1.0) merge: hotfix/preserve-delete-tombstones into main
 |\  
 | * 211921c (origin/hotfix/preserve-delete-tombstones, hotfix/preserve-delete-tombstones) fix: preserve deleted issues until server confirmation
 |/  
